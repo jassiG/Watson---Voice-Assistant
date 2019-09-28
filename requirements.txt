@@ -1,0 +1,7 @@
+speechrecognition==3.8.1
+wikipedia==1.4.0
+pyttsx3==2.71
+beautifulsoup4==4.8.0
+wolframalpha==3.0.1
+pyjokes==0.6.0
+google==2.0.2
