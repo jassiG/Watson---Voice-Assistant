@@ -51,3 +51,5 @@ YOU CAN ALSO OPEN SOME COMMON APPS ON YOUR PC LIKE:
 10)sys
 
 11)random
+
+12)pyAudio ('conda install PyAudio' in conda prompt)**microsoft visual C++ 14.0 in required
