@@ -1,7 +1,7 @@
-import pyttsx3                     
-import speech_recognition as sr 
+import pyttsx3
+import speech_recognition as sr
 import datetime
-import wikipedia 
+import wikipedia
 import webbrowser
 import os
 import sys
@@ -50,12 +50,12 @@ def wishMe():
         speak("Good Morning sir!")
 
     elif hour>=12 and hour<18:
-        speak("Good Afternoon sir!")   
+        speak("Good Afternoon sir!")
 
     else:
-        speak("Good Evening sir!")  
+        speak("Good Evening sir!")
 
-    speak("how can I help you")       
+    speak("how can I help you")
 
 def takeCommand():
     #It takes microphone input from the user and returns string output
@@ -69,13 +69,13 @@ def takeCommand():
         audio = r.listen(source)
 
     try:
-        print("Recognizing...")    
+        print("Recognizing...")
         query = r.recognize_google(audio, language='en-in')
         print(f"User said: {query}\n")
 
     except Exception as e:
-        print(e)    
-        print("Say that again please...")  
+        print(e)
+        print("Say that again please...")
         return "None"
     return query
 
@@ -85,89 +85,93 @@ if __name__ == "__main__":
     while True:
         query = takeCommand().lower()
         chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
-        
+
         #group of "open" keyword related programmes
         if 'open' in query:
             if 'open youtube' in query or 'open you tube' in query:
               webbrowser.get(chrome_path).open_new_tab("youtube.com")
-            
+
             elif 'open google scholar' in query:
               webbrowser.get(chrome_path).open("https://scholar.google.com/")
+
             elif 'open google' in query:
               webbrowser.get(chrome_path).open_new_tab("google.com")
-            
+
+          elif 'open reddit' in query:
+              webbrowser.get(chrome_path).open_new_tab("reddit.com")
+
             elif 'open google drive' in query:
-              webbrowser.get(chrome_path).open("drive.google.com")   
-            
+              webbrowser.get(chrome_path).open("drive.google.com")
+
             elif 'open facebook' in query:
               webbrowser.get(chrome_path).open("www.facebook.com")
-            
+
             elif 'open instagram' in query:
               webbrowser.get(chrome_path).open("www.instagram.com")
-            
+
             elif 'open geeksforgeeks' in query:
               webbrowser.get(chrome_path).open("https://www.geeksforgeeks.org")
-            
-            elif 'open stackoverflow' in query: 
+
+            elif 'open stackoverflow' in query:
               webbrowser.get(chrome_path).open_new_tab("stackoverflow.com")
             elif 'open stack overflow' in query:
-              webbrowser.get(chrome_path).open_new_tab("stackoverflow.com") 
-              
+              webbrowser.get(chrome_path).open_new_tab("stackoverflow.com")
+
             elif 'open codechef' in query:
                  webbrowser.get(chrome_path).open_new_tab("www.codechef.com")
             elif 'open code chef' in query:
-                 webbrowser.get(chrome_path).open_new_tab("www.codechef.com")            
-            
+                 webbrowser.get(chrome_path).open_new_tab("www.codechef.com")
+
             elif 'open udemy' in query:
               webbrowser.get(chrome_path).open("www.udemy.com")
-            
+
             elif 'open learncpp' in query:
               webbrowser.get(chrome_path).open("www.learncpp.com")
             elif 'open learn cpp' in query:
                  webbrowser.get(chrome_path).open("www.learncpp.com")
-            
+
             elif 'open main website' in query:
               webbrowser.get(chrome_path).open("www.iitr.ac.in")
-            
+
             elif 'open channel i' in query:
               webbrowser.get(chrome_path).open("www.channeli.in")
-            
+
             elif 'open github' in query or 'open git hub' in query:
               webbrowser.get(chrome_path).open("www.github.com")
-            
+
             elif 'open twitter' in query:
               webbrowser.get(chrome_path).open("www.twitter.com")
-            
+
             elif 'open movies' in query:
               webbrowser.get(chrome_path).open("yts.lt")
-            
+
             elif 'open course' in query:
               webbrowser.get(chrome_path).open("www.coursera.org")
             elif 'open coursera' in query:
                 webbrowser.get(chrome_path).open("www.coursera.org")
-            
+
             elif 'open e library' in query:
               webbrowser.get(chrome_path).open("https://ndl.iitkgp.ac.in/")
-              
+
             elif 'open photoshop' in query:
               webbrowser.get(chrome_path).open("www.photoshop.com")
-              
+
             elif 'open glassdoor' in query:
               webbrowser.get(chrome_path).open("https://www.glassdoor.co.in/index.htm")
-              
+
             elif 'open linkedin' in query:
               webbrowser.get(chrome_path).open("https://in.linkedin.com/")
-              
+
             elif 'open ted talks' in query:
               webbrowser.get(chrome_path).open("https://www.ted.com/#/")
-    
+
             elif 'open code blocks' in query:
               codePath = "C:\\Program Files (x86)\\CodeBlocks\\CodeBlocks.exe"
               os.startfile(codePath)
             elif 'open codeblocks' in query:
              codePath = "C:\\Program Files (x86)\\CodeBlocks\\CodeBlocks.exe"
              os.startfile(codePath)
-             
+
         elif 'in wikipedia' in query:
            try:
             speak('Searching Wikipedia...')
@@ -180,7 +184,7 @@ if __name__ == "__main__":
                 print("sorry, could not find a result")
                 speak("sorry, could not find a result")
         elif 'activate alpha' in query:
-            
+
             while True:
              print('do you want to ask oral question or a math expression or exit?')
              speak('do you want to ask oral question or a math expression or exit?')
@@ -232,48 +236,48 @@ if __name__ == "__main__":
             y=random.randrange(0,50,1)
             print(songs[y])
             os.startfile(os.path.join(music_dir, songs[y]))
-        
+
         elif'exit code blocks' in query or 'exit codeblocks' in query:
             os.system("taskkill /f /im codeblocks.exe")
-            
+
         elif 'exit' in query:
             speak("good bye sir, have a nice day")
             sys.exit()
-            
+
         elif 'time' in query:
-            strTime = datetime.datetime.now().strftime("%H:%M:%S") 
-            print("The Time is : "+strTime)   
-            speak(f"Sir, the time is {strTime}") 
-        
-        elif 'date' in query:                   
-            print("Present date is : ",end="")   
-            print(date.today())                  
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")
+            print("The Time is : "+strTime)
+            speak(f"Sir, the time is {strTime}")
+
+        elif 'date' in query:
+            print("Present date is : ",end="")
+            print(date.today())
             speak(date.today())
-            
+
         elif'spotify' in query:
             os.startfile("C:\\Users\\hp\\AppData\\Roaming\\Spotify\\Spotify.exe")
-            
+
         elif 'exit spotify' in query:
             os.system("taskkill /f /im spotify.exe")
-            
+
         elif'visual studio' in query:
             os.startfile("C:\\Users\\hp\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
-        
+
         elif'code' in query:
             os.startfile("C:\\Users\\hp\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
-            
+
         elif 'downloads' in query:
             os.startfile("C:\\Users\\hp\\Downloads")
         elif 'download' in query:
             os.startfile("C:\\Users\\hp\\Downloads")
-            
+
         elif 'exit spotify' in query:
             os.system("taskkill /f /im spotify.exe")
-            
+
         elif 'i am bored' in query:
             speak('maybe this programmer joke could make you smile.')
             speak(pyjokes.get_joke())
-            
+
         elif 'shut down' in query:
             os.system("shutdown /s /t 1")
         elif 'shutdown' in query:
