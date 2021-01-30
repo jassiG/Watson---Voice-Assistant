@@ -97,7 +97,7 @@ if __name__ == "__main__":
             elif 'open google' in query:
               webbrowser.get(chrome_path).open_new_tab("google.com")
 
-          elif 'open reddit' in query:
+            elif 'open reddit' in query:
               webbrowser.get(chrome_path).open_new_tab("reddit.com")
 
             elif 'open google drive' in query:
