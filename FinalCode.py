@@ -89,81 +89,81 @@ if __name__ == "__main__":
         #group of "open" keyword related programmes
         if 'open' in query:
             if 'open youtube' in query or 'open you tube' in query:
-              webbrowser.get(chrome_path).open_new_tab("youtube.com")
+              webbrowser.open_new_tab("youtube.com")
 
             elif 'open google scholar' in query:
-              webbrowser.get(chrome_path).open("https://scholar.google.com/")
+              webbrowser.open("https://scholar.google.com/")
 
             elif 'open google' in query:
               webbrowser.get(chrome_path).open_new_tab("google.com")
 
             elif 'open reddit' in query:
-              webbrowser.get(chrome_path).open_new_tab("reddit.com")
+              webbrowser.open_new_tab("reddit.com")
 
             elif 'open google drive' in query:
-              webbrowser.get(chrome_path).open("drive.google.com")
+              webbrowser.open("drive.google.com")
 
             elif 'open facebook' in query:
-              webbrowser.get(chrome_path).open("www.facebook.com")
+              webbrowser.open("www.facebook.com")
 
             elif 'open instagram' in query:
-              webbrowser.get(chrome_path).open("www.instagram.com")
+              webbrowser.open("www.instagram.com")
 
             elif 'open geeksforgeeks' in query:
-              webbrowser.get(chrome_path).open("https://www.geeksforgeeks.org")
+              webbrowse.open("https://www.geeksforgeeks.org")
 
             elif 'open stackoverflow' in query:
-              webbrowser.get(chrome_path).open_new_tab("stackoverflow.com")
+              webbrowser.open_new_tab("stackoverflow.com")
             elif 'open stack overflow' in query:
-              webbrowser.get(chrome_path).open_new_tab("stackoverflow.com")
+              webbrowser.open_new_tab("stackoverflow.com")
 
             elif 'open codechef' in query:
-                 webbrowser.get(chrome_path).open_new_tab("www.codechef.com")
+                 webbrowser.open_new_tab("www.codechef.com")
             elif 'open code chef' in query:
-                 webbrowser.get(chrome_path).open_new_tab("www.codechef.com")
+                 webbrowser.open_new_tab("www.codechef.com")
 
             elif 'open udemy' in query:
-              webbrowser.get(chrome_path).open("www.udemy.com")
+              webbrowser.open("www.udemy.com")
 
             elif 'open learncpp' in query:
-              webbrowser.get(chrome_path).open("www.learncpp.com")
+              webbrowser.open("www.learncpp.com")
             elif 'open learn cpp' in query:
                  webbrowser.get(chrome_path).open("www.learncpp.com")
 
             elif 'open main website' in query:
-              webbrowser.get(chrome_path).open("www.iitr.ac.in")
+              webbrowser.open("www.iitr.ac.in")
 
             elif 'open channel i' in query:
-              webbrowser.get(chrome_path).open("www.channeli.in")
+              webbrowser.open("www.channeli.in")
 
             elif 'open github' in query or 'open git hub' in query:
-              webbrowser.get(chrome_path).open("www.github.com")
+              webbrowser.open("www.github.com")
 
             elif 'open twitter' in query:
-              webbrowser.get(chrome_path).open("www.twitter.com")
+              webbrowser.open("www.twitter.com")
 
             elif 'open movies' in query:
-              webbrowser.get(chrome_path).open("yts.lt")
+              webbrowser.open("yts.lt")
 
             elif 'open course' in query:
-              webbrowser.get(chrome_path).open("www.coursera.org")
+              webbrowser.open("www.coursera.org")
             elif 'open coursera' in query:
-                webbrowser.get(chrome_path).open("www.coursera.org")
+                webbrowser.open("www.coursera.org")
 
             elif 'open e library' in query:
-              webbrowser.get(chrome_path).open("https://ndl.iitkgp.ac.in/")
+              webbrowser.open("https://ndl.iitkgp.ac.in/")
 
             elif 'open photoshop' in query:
-              webbrowser.get(chrome_path).open("www.photoshop.com")
+              webbrowser.open("www.photoshop.com")
 
             elif 'open glassdoor' in query:
-              webbrowser.get(chrome_path).open("https://www.glassdoor.co.in/index.htm")
+              webbrowser.open("https://www.glassdoor.co.in/index.htm")
 
             elif 'open linkedin' in query:
-              webbrowser.get(chrome_path).open("https://in.linkedin.com/")
+              webbrowser.open("https://in.linkedin.com/")
 
             elif 'open ted talks' in query:
-              webbrowser.get(chrome_path).open("https://www.ted.com/#/")
+              webbrowser.open("https://www.ted.com/#/")
 
             elif 'open code blocks' in query:
               codePath = "C:\\Program Files (x86)\\CodeBlocks\\CodeBlocks.exe"
@@ -172,10 +172,14 @@ if __name__ == "__main__":
              codePath = "C:\\Program Files (x86)\\CodeBlocks\\CodeBlocks.exe"
              os.startfile(codePath)
 
-        elif 'in wikipedia' in query:
+        elif 'wikipedia' in query:
            try:
             speak('Searching Wikipedia...')
-            query = query.replace("in wikipedia", "")
+            query = query.replace("wikipedia", "")
+            if "in" in query:
+                query = query.replace("in", "")
+            if "search" in query:
+                query = query.replace("search", "")
             results = wikipedia.summary(query, sentences=2)
             speak("According to Wikipedia")
             print(results)
@@ -183,11 +187,11 @@ if __name__ == "__main__":
            except:
                 print("sorry, could not find a result")
                 speak("sorry, could not find a result")
-        elif 'activate alpha' in query:
+        elif 'activate alpha' in query or 'wolfram alpha' in query or 'wolfram'in query:
 
             while True:
-             print('do you want to ask oral question or a math expression or exit?')
-             speak('do you want to ask oral question or a math expression or exit?')
+             print('do you want to ask oral question or a math expression?')
+             speak('do you want to ask oral question or a math expression?')
              print('speak oral/mathematics/exit')
              inp=takeCommand()
              if 'oral' in inp:
@@ -211,10 +215,14 @@ if __name__ == "__main__":
              inp=''
              query=''
         elif 'google search' in query:
-            query=query.replace("Google search","")
-            chrome_path = r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe %s'
+            query=query.replace("google search","")
+            # you have to update this path for your machine for now
+            #chrome_path = r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe %s'
             for url in search(query, tld="co.in", num=1, stop = 1, pause = 2):
-                 webbrowser.open("https://google.com/search?q=%s" % query)
+                try:
+                    webbrowser.open("https://google.com/search?q=%s" % query)
+                except webbrowser.Error:
+                    print("unexpected error happened in webbrower")
         elif 'meaning of ' in query:
             query=query.replace("meaning of ","")
             dictionary=PyDictionary()
@@ -281,4 +289,4 @@ if __name__ == "__main__":
         elif 'shut down' in query:
             os.system("shutdown /s /t 1")
         elif 'shutdown' in query:
-             os.system("shutdown /s /t 1")
+             os.system("shutdown /s /t 1")  
