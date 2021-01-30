@@ -1,8 +1,6 @@
 PERSONAL_Voice_ASSISTANT 
 ==========
 
-Code Made By jassiG
-
 INSTRUCTIONS
 ---------
 
