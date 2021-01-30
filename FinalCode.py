@@ -110,7 +110,7 @@ if __name__ == "__main__":
               webbrowser.open("www.instagram.com")
 
             elif 'open geeksforgeeks' in query:
-              webbrowse.open("https://www.geeksforgeeks.org")
+              webbrowser.open("https://www.geeksforgeeks.org")
 
             elif 'open stackoverflow' in query:
               webbrowser.open_new_tab("stackoverflow.com")
