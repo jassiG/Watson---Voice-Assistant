@@ -15,11 +15,16 @@ from PyDictionary import PyDictionary
 from functools import partial
 import tkinter as tk
 from tkinter import scrolledtext as st
+from tkinter import filedialog as fd
 
 loop = True
 window = tk.Tk()
 window.geometry("800x545")
 window.resizable(0,0)
+musicPath = tk.StringVar()
+cust_1_path = tk.StringVar()
+cust_2_path = tk.StringVar()
+cust_3_path = tk.StringVar()
 window.rowconfigure(0, minsize=700, weight=1)
 window.columnconfigure(1, minsize=700, weight=1)
 
@@ -59,6 +64,14 @@ engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
 
+def cust_Getpath(x):
+    x.set(fd.askopenfilename())
+
+def browseMusic():
+    global musicPath
+    filename = fd.askdirectory()
+    musicPath.set(filename)
+    
 
 def speak(audio):
     engine.say(audio)
@@ -124,19 +137,20 @@ def mainloop():
                     webbrowser.open("https://google.com/search?q=%s" % query)
                 except webbrowser.Error:
                     print("unexpected error happened in webbrower")
+                    text2.insert(tk.END, "unexpected error happened in webbrower\n")
         
         if 'open' in query:
             if 'open youtube' in query or 'open you tube' in query:
-                webbrowser.open_new_tab("youtube.com")
+                webbrowser.open("youtube.com")
         
             elif 'open google scholar' in query:
                 webbrowser.open("https://scholar.google.com/")
         
             elif 'open google' in query:
-                webbrowser.open_new_tab("google.com")
+                webbrowser.open("google.com")
         
             elif 'open reddit' in query:
-                webbrowser.open_new_tab("reddit.com")
+                webbrowser.open("reddit.com")
         
             elif 'open google drive' in query:
                 webbrowser.open("drive.google.com")
@@ -151,14 +165,14 @@ def mainloop():
                 webbrowser.open("https://www.geeksforgeeks.org")
         
             elif 'open stackoverflow' in query:
-                webbrowser.open_new_tab("stackoverflow.com")
+                webbrowser.open("stackoverflow.com")
             elif 'open stack overflow' in query:
-                webbrowser.open_new_tab("stackoverflow.com")
+                webbrowser.open("stackoverflow.com")
         
             elif 'open codechef' in query:
-                webbrowser.open_new_tab("www.codechef.com")
+                webbrowser.open("www.codechef.com")
             elif 'open code chef' in query:
-                webbrowser.open_new_tab("www.codechef.com")
+                webbrowser.open("www.codechef.com")
         
             elif 'open udemy' in query:
                 webbrowser.open("www.udemy.com")
@@ -203,11 +217,15 @@ def mainloop():
             elif 'open ted talks' in query:
                 webbrowser.open("https://www.ted.com/#/")
         
-            elif 'open code blocks' in query:
-                codePath = "C:\\Program Files (x86)\\CodeBlocks\\CodeBlocks.exe"
+            elif 'open custom 1' in query:
+                codePath = cust_1_path.get()
+                print(codePath)
                 os.startfile(codePath)
-            elif 'open codeblocks' in query:
-                codePath = "C:\\Program Files (x86)\\CodeBlocks\\CodeBlocks.exe"
+            elif 'open custom 2' in query:
+                codePath = cust_2_path.get()
+                os.startfile(codePath)
+            elif 'open custom 3' in query:
+                codePath = cust_3_path.get()
                 os.startfile(codePath)
         
         elif 'wikipedia' in query:
@@ -221,23 +239,29 @@ def mainloop():
                 results = wikipedia.summary(query, sentences=2)
                 speak("According to Wikipedia")
                 print(results)
+                text2.insert(tk.END, results+"\n")
                 speak(results)
             except:
                 print("sorry, could not find a result")
+                text2.insert(tk.END, "sorry, could not find a result\n")
                 speak("sorry, could not find a result")
         elif 'activate alpha' in query or 'wolfram alpha' in query or 'wolfram' in query:
         
             while True:
                 print('do you want to ask oral question or a math expression?')
+                text2.insert(tk.END,'do you want to ask oral question or a math expression?\n')
                 speak('do you want to ask oral question or a math expression?')
                 print('speak oral/mathematics/exit')
+                text2.insert(tk.END, 'speak oral/mathematics/exit\n')
                 inp = takeCommand()
                 if 'oral' in inp:
                     speak("ask question")
                     print("ask question: ")
+                    text2.insert(tk.END, "ask question: \n")
                     query = takeCommand()
                 elif 'mathematics' in inp:
                     print('Please type the question: ')
+                    text2.insert(tk.END, 'Please type the question: \n')
                     query = input()
                 elif 'exit' in inp:
                     break
@@ -248,8 +272,10 @@ def mainloop():
                     speak(output)
                 except StopIteration:
                     print('speak again')
+                    text2.insert(tk.END, 'speak again\n')
                 except:
                     print("can't find this in library")
+                    text2.insert(tk.END, "can't find this in library\n")
                 inp = ''
                 query = ''
         elif 'google search' in query:
@@ -261,6 +287,7 @@ def mainloop():
                     webbrowser.open("https://google.com/search?q=%s" % query)
                 except webbrowser.Error:
                     print("unexpected error happened in webbrower")
+                    text2.insert(tk.END, "unexpected error happened in webbrower\n")
         elif 'meaning of ' in query:
             query = query.replace("meaning of ", "")
             dictionary = PyDictionary()
@@ -274,12 +301,14 @@ def mainloop():
                        for i in range(1)]
                 # shows most relevent meaning
                 print(str(res[0]))
+                text2.insert(tk.END, str(res[0])+"\n")
                 speak(str(res[0]))
             except:
                 print("sorry! word not found...")
+                text2.insert(tk.END, "sorry! word not found...\n")
         
         elif 'play music' in query:
-            music_dir = 'F:\\Music\\Music'
+            music_dir = musicPath.get()
             songs = os.listdir(music_dir)
             y = random.randrange(0, 50, 1)
             print(songs[y])
@@ -350,10 +379,19 @@ if __name__ == "__main__":
     text.insert(tk.END, wlcmNote)
     button = tk.Button(buttons, text= "Start Query", command = x.start)
     button2 = tk.Button(buttons, text= "Kill Query", command = partial(kill, x))
+    button3 = tk.Button(buttons, text= "music folder", command = browseMusic)
+    button4 = tk.Button(buttons, text= "custom 1", command = partial(cust_Getpath, cust_1_path))
+    button5 = tk.Button(buttons, text= "custom 2", command = partial(cust_Getpath, cust_2_path))
+    button6 = tk.Button(buttons, text= "custom 3", command = partial(cust_Getpath, cust_3_path))
     
     button.grid(row = 0, column = 0, sticky = "ew", padx = 5, pady = 5)
     button2.grid(row = 1, column = 0, sticky = "ew", padx = 5, pady = 5)
+    button3.grid(row = 2, column = 0, sticky = "ew", padx = 5, pady = 5)
+    button4.grid(row = 3, column = 0, sticky = "ew", padx = 5, pady = 5)
+    button5.grid(row = 4, column = 0, sticky = "ew", padx = 5, pady = 5)
+    button6.grid(row = 5, column = 0, sticky = "ew", padx = 5, pady = 5)
     buttons.grid(row=0, column=0, sticky="ns")
     
     text.grid(row=0, column=0, sticky="ew", padx=0,pady=2)
+    
     window.mainloop()
