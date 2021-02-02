@@ -17,6 +17,7 @@ import tkinter as tk
 from tkinter import scrolledtext as st
 from tkinter import filedialog as fd
 
+
 loop = True
 window = tk.Tk()
 window.geometry("800x545")
@@ -64,8 +65,40 @@ engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
 
+with open("new.txt", "w") as f:                #this code's folder must contain a new.txt file
+    f.write("1stc"+"\n"+"2ndc"+"\n"+"3rdc")
+f.close()
 def cust_Getpath(x):
     x.set(fd.askopenfilename())
+    if x == cust_1_path:
+        fin = open("new.txt", "rt")
+        data = fin.read()
+        data = data.replace('1stc', x.get())
+        fin.close()
+        fin = open("new.txt", "wt")
+        fin.write(data)
+        fin.close()
+
+    elif x == cust_2_path:
+        fin = open("new.txt", "rt")
+        data = fin.read()
+        data = data.replace('2ndc', x.get())
+        fin.close()
+        fin = open("new.txt", "wt")
+        fin.write(data)
+        fin.close()
+    elif x == cust_3_path:
+        fin = open("new.txt", "rt")
+        data = fin.read()
+        data = data.replace('3rdc', x.get())
+        fin.close()
+        fin = open("new.txt", "wt")
+        fin.write(data)
+        fin.close()
+            
+        
+
+
 
 def browseMusic():
     global musicPath
@@ -216,17 +249,51 @@ def mainloop():
         
             elif 'open ted talks' in query:
                 webbrowser.open("https://www.ted.com/#/")
-        
+    
             elif 'open custom 1' in query:
-                codePath = cust_1_path.get()
-                print(codePath)
-                os.startfile(codePath)
+                f=open('new.txt')                #this code's folder must contain a empty new.txt file
+                lines=f.readlines()
+                codePath = lines[0]
+                prtln=''
+                for letters in lines[0]:
+                    if letters != '\n':
+                        prtln += letters
+                if codePath != '1stc\n':
+                    text2.insert(tk.END, prtln +'\n')
+                    os.startfile(prtln)
+                else:
+                    text2.insert(tk.END, "First Enter custom1 you idiot\n")
+                f.close()
+                
             elif 'open custom 2' in query:
-                codePath = cust_2_path.get()
-                os.startfile(codePath)
+                f=open('new.txt')             #this code's folder must contain a empty new.txt file
+                lines=f.readlines()
+                codePath = lines[1]
+                prtln=''
+                for letters in lines[1]:
+                    if letters != '\n':
+                        prtln += letters
+                if codePath != '2ndc\n':
+                    text2.insert(tk.END, prtln+'\n')
+                    os.startfile(prtln)
+                else:
+                    text2.insert(tk.END, "First Enter custom2 you idiot\n")
+                f.close()
+
             elif 'open custom 3' in query:
-                codePath = cust_3_path.get()
-                os.startfile(codePath)
+                f=open('new.txt')          #this code's folder must contain a empty new.txt file
+                lines=f.readlines()
+                codePath = lines[2]
+                prtln=''
+                for letters in lines[2]:
+                    if letters != '\n':
+                        prtln += letters
+                if codePath != '3rdc' :
+                    text2.insert(tk.END, prtln+'\n')
+                    os.startfile(prtln)
+                else:
+                    text2.insert(tk.END, "First Enter custom3 you idiot\n")
+                f.close()
         
         elif 'wikipedia' in query:
             try:
@@ -372,6 +439,7 @@ def kill(x):
     #if x.is_alive():
         #x.join()
     sys.exit()
+
     
 if __name__ == "__main__":
     x = threading.Thread(target=mainloop)
@@ -383,7 +451,7 @@ if __name__ == "__main__":
     button4 = tk.Button(buttons, text= "custom 1", command = partial(cust_Getpath, cust_1_path))
     button5 = tk.Button(buttons, text= "custom 2", command = partial(cust_Getpath, cust_2_path))
     button6 = tk.Button(buttons, text= "custom 3", command = partial(cust_Getpath, cust_3_path))
-    
+
     button.grid(row = 0, column = 0, sticky = "ew", padx = 5, pady = 5)
     button2.grid(row = 1, column = 0, sticky = "ew", padx = 5, pady = 5)
     button3.grid(row = 2, column = 0, sticky = "ew", padx = 5, pady = 5)
