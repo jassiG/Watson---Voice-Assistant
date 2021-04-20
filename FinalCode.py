@@ -16,13 +16,15 @@ from functools import partial
 import tkinter as tk
 from tkinter import scrolledtext as st
 from tkinter import filedialog as fd
+import json
 
 
 loop = True
 window = tk.Tk()
+window.title("Assist")
 window.geometry("800x545")
 window.resizable(0,0)
-musicPath = tk.StringVar()
+
 cust_1_path = tk.StringVar()
 cust_2_path = tk.StringVar()
 cust_3_path = tk.StringVar()
@@ -65,45 +67,38 @@ engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
 
-with open("new.txt", "w") as f:                #this code's folder must contain a new.txt file
-    f.write("1stc"+"\n"+"2ndc"+"\n"+"3rdc")
-f.close()
+musicPath = tk.StringVar()
+musicPathDefault = os.path.join(os.path.expanduser('~'), 'Music')
+musicPath.set(musicPathDefault)
+customPaths = {"custom_path1": musicPathDefault, "custom_path2": musicPathDefault, "custom_path3": musicPathDefault, "music_path": musicPathDefault,}
+if not "configAssist.json" in os.listdir(os.path.dirname(os.path.realpath(__file__))):
+    print("no conf file found...")
+    print("making a config file...")
+    with open("d:\Dev\Voice Assist\configAssist.json", "w") as f:
+        json.dump(customPaths, f)
+    f.close()
+else:
+    with open("d:\Dev\Voice Assist\configAssist.json", "r") as f:
+        customPaths = json.load(f)
+    f.close()
+
+
 def cust_Getpath(x):
-    x.set(fd.askopenfilename())
-    if x == cust_1_path:
-        fin = open("new.txt", "rt")
-        data = fin.read()
-        data = data.replace('1stc', x.get())
-        fin.close()
-        fin = open("new.txt", "wt")
-        fin.write(data)
-        fin.close()
-
-    elif x == cust_2_path:
-        fin = open("new.txt", "rt")
-        data = fin.read()
-        data = data.replace('2ndc', x.get())
-        fin.close()
-        fin = open("new.txt", "wt")
-        fin.write(data)
-        fin.close()
-    elif x == cust_3_path:
-        fin = open("new.txt", "rt")
-        data = fin.read()
-        data = data.replace('3rdc', x.get())
-        fin.close()
-        fin = open("new.txt", "wt")
-        fin.write(data)
-        fin.close()
+    #x.set(fd.askopenfilename())
+    customPaths[x] = fd.askopenfilename()
+    #print(customPaths)
+    with open("d:\Dev\Voice Assist\configAssist.json", "w") as f:
+        json.dump(customPaths, f)
+    f.close()
             
-        
-
-
 
 def browseMusic():
-    global musicPath
-    filename = fd.askdirectory()
-    musicPath.set(filename)
+    global customPaths
+    customPaths["music_path"] = fd.askdirectory()
+    with open("d:\Dev\Voice Assist\configAssist.json", "w") as f:
+        json.dump(customPaths, f)
+    f.close()
+    
     
 
 def speak(audio):
@@ -165,12 +160,12 @@ def mainloop():
     
        # group of "open" keyword related programmes
         if 'what' in query:
-            for url in search(query, tld="co.in", num=1, stop=1, pause=2):
-                try:
-                    webbrowser.open("https://google.com/search?q=%s" % query)
-                except webbrowser.Error:
-                    print("unexpected error happened in webbrower")
-                    text2.insert(tk.END, "unexpected error happened in webbrower\n")
+            url = search(query, stop=1)
+            try:
+                webbrowser.open(url)
+            except webbrowser.Error:
+                print("unexpected error happened in webbrower")
+                text2.insert(tk.END, "unexpected error happened in webbrower\n")
         
         if 'open' in query:
             if 'open youtube' in query or 'open you tube' in query:
@@ -251,49 +246,13 @@ def mainloop():
                 webbrowser.open("https://www.ted.com/#/")
     
             elif 'open custom 1' in query:
-                f=open('new.txt')                #this code's folder must contain a empty new.txt file
-                lines=f.readlines()
-                codePath = lines[0]
-                prtln=''
-                for letters in lines[0]:
-                    if letters != '\n':
-                        prtln += letters
-                if codePath != '1stc\n':
-                    text2.insert(tk.END, prtln +'\n')
-                    os.startfile(prtln)
-                else:
-                    text2.insert(tk.END, "First Enter custom1 you idiot\n")
-                f.close()
+                    os.startfile(customPaths["custom_path1"])
                 
             elif 'open custom 2' in query:
-                f=open('new.txt')             #this code's folder must contain a empty new.txt file
-                lines=f.readlines()
-                codePath = lines[1]
-                prtln=''
-                for letters in lines[1]:
-                    if letters != '\n':
-                        prtln += letters
-                if codePath != '2ndc\n':
-                    text2.insert(tk.END, prtln+'\n')
-                    os.startfile(prtln)
-                else:
-                    text2.insert(tk.END, "First Enter custom2 you idiot\n")
-                f.close()
+                os.startfile(customPaths["custom_path2"])
 
             elif 'open custom 3' in query:
-                f=open('new.txt')          #this code's folder must contain a empty new.txt file
-                lines=f.readlines()
-                codePath = lines[2]
-                prtln=''
-                for letters in lines[2]:
-                    if letters != '\n':
-                        prtln += letters
-                if codePath != '3rdc' :
-                    text2.insert(tk.END, prtln+'\n')
-                    os.startfile(prtln)
-                else:
-                    text2.insert(tk.END, "First Enter custom3 you idiot\n")
-                f.close()
+                os.startfile(customPaths["custom_path3"])
         
         elif 'wikipedia' in query:
             try:
@@ -352,7 +311,7 @@ def mainloop():
             for url in search(query, tld="co.in", num=1, stop=1, pause=2):
                 try:
                     webbrowser.open("https://google.com/search?q=%s" % query)
-                except webbrowser.Error:
+                except:
                     print("unexpected error happened in webbrower")
                     text2.insert(tk.END, "unexpected error happened in webbrower\n")
         elif 'meaning of ' in query:
@@ -375,11 +334,15 @@ def mainloop():
                 text2.insert(tk.END, "sorry! word not found...\n")
         
         elif 'play music' in query:
-            music_dir = musicPath.get()
+            music_dir = customPaths["music_path"]
             songs = os.listdir(music_dir)
-            y = random.randrange(0, 50, 1)
-            print(songs[y])
-            os.startfile(os.path.join(music_dir, songs[y]))
+            y = random.randrange(0, len(songs))
+            print("Playing " + songs[y])
+            try:
+                os.startfile(os.path.join(music_dir, songs[y]))
+            except:
+                text2.insert(tk.END, "sorry, the music file cannot be opened\n")
+                    
         
         elif'exit code blocks' in query or 'exit codeblocks' in query:
             os.system("taskkill /f /im codeblocks.exe")
@@ -438,6 +401,7 @@ def kill(x):
     loop = False
     #if x.is_alive():
         #x.join()
+    window.destroy()
     sys.exit()
 
     
@@ -448,9 +412,9 @@ if __name__ == "__main__":
     button = tk.Button(buttons, text= "Start Query", command = x.start)
     button2 = tk.Button(buttons, text= "Kill Query", command = partial(kill, x))
     button3 = tk.Button(buttons, text= "music folder", command = browseMusic)
-    button4 = tk.Button(buttons, text= "custom 1", command = partial(cust_Getpath, cust_1_path))
-    button5 = tk.Button(buttons, text= "custom 2", command = partial(cust_Getpath, cust_2_path))
-    button6 = tk.Button(buttons, text= "custom 3", command = partial(cust_Getpath, cust_3_path))
+    button4 = tk.Button(buttons, text= "custom 1", command = partial(cust_Getpath, "custom_path1"))
+    button5 = tk.Button(buttons, text= "custom 2", command = partial(cust_Getpath, "custom_path2"))
+    button6 = tk.Button(buttons, text= "custom 3", command = partial(cust_Getpath, "custom_path3"))
 
     button.grid(row = 0, column = 0, sticky = "ew", padx = 5, pady = 5)
     button2.grid(row = 1, column = 0, sticky = "ew", padx = 5, pady = 5)
