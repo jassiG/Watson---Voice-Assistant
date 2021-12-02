@@ -1,18 +1,16 @@
-PERSONAL_Voice_ASSISTANT 
-==========
+# Watson - Your Python Voice Assistant
 
-
+## Demo
 https://user-images.githubusercontent.com/55924890/144345092-7ac62ee3-d89b-41e4-ac7e-b59e6076df4f.mp4
 
 
 
 
-INSTRUCTIONS
----------
+## INSTRUCTIONS
 
-- __EARPHONES ARE MUST FOR THE CODE TO INPUT VOICE COMMAND.__
+- EARPHONES ARE MUST FOR THE CODE TO INPUT VOICE COMMAND.
 - just speak what you want when the Assistant starts listening.
-#### You can Use Specific Keywords for specific functions:-
+### You can Use Specific Keywords for specific functions:-
 - WIKIPEDIA           :WIKIPEDIA_SEARCH
 - SEARCH              :GOOGLE SEARCH
 - ACTIVATE ALPHA      :WOLFRAM_MODE
@@ -24,11 +22,11 @@ INSTRUCTIONS
 - SHUTDOWN            :turns the computer off
 - PLAY MUSIC          :plays music (directory should be specified)
   
-#### you can also open some common websites LIKE:
+### you can also open some common websites LIKE:
 >google; youtube; google_drive; facebook; instagram; twitter; Stack_Overflow; Git_Hub;
 >IITR MAIN WEBSITE; CHANNEL I;
 
-### IMPORTANT MODULES TO BE DOWNLOADED FOR THE CODE TO RUN:
+### Required Modules:
 1) pyttsx3
 2) wolframalpha
 3) google
