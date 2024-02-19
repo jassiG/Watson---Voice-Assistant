@@ -8,7 +8,7 @@ https://user-images.githubusercontent.com/55924890/144345092-7ac62ee3-d89b-41e4-
 
 ## INSTRUCTIONS
 
-- EARPHONES ARE MUST FOR THE CODE TO INPUT VOICE COMMAND.
+- `pip install -r requirements.txt`
 - just speak what you want when the Assistant starts listening.
 ### You can Use Specific Keywords for specific functions:-
 - WIKIPEDIA           :WIKIPEDIA_SEARCH
